@@ -1,0 +1,49 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: init-apps
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      repoURL: "git@github.com:m-over/capi-argocd-bootstrap.git"
+      revision: HEAD
+      directories:
+      - path: apps/*
+  template:
+    metadata:
+      name: 'app-{{path[1]}}'
+    spec:
+      project: default
+      source:
+        repoURL: "git@github.com:m-over/capi-argocd-bootstrap.git"
+        targetRevision: HEAD
+        path: apps/{{path[1]}}
+      destination:
+        server: 'https://kubernetes.default.svc'
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: init-cluster
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      repoURL: "git@github.com:m-over/capi-argocd-bootstrap.git"
+      revision: HEAD
+      directories:
+      - path: cluster/*
+  template:
+    metadata:
+      name: 'capi-{{path[1]}}'
+    spec:
+      project: default
+      source:
+        repoURL: "git@github.com:m-over/capi-argocd-bootstrap.git"
+        targetRevision: HEAD
+        path: cluster/{{path[1]}}
+      destination:
+        server: 'https://kubernetes.default.svc'
