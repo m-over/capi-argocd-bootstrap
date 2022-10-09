@@ -19,7 +19,8 @@ spec:
         targetRevision: HEAD
         path: apps/cilium/chart
         helm:
+          releaseName: cilium
           values: ../overlays/{{cluster}}/values.yaml
       destination:
         server: '{{url}}'
-        namespace: argocd
+        namespace: kube-system
