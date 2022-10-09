@@ -19,7 +19,7 @@ spec:
         targetRevision: HEAD
         path: apps/cilium/chart
         helm:
-          values: ../{{cluster}}/values.yaml
+          values: ../overlays/{{cluster}}/values.yaml
       destination:
         server: '{{url}}'
         namespace: argocd
