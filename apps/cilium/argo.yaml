@@ -20,7 +20,6 @@ spec:
         path: apps/cilium/chart
         helm:
           releaseName: cilium
-          values: []
 #          values: ../overlays/{{cluster}}/values.yaml
       destination:
         server: '{{url}}'
