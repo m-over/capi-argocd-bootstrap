@@ -20,10 +20,6 @@ spec:
         path: apps/cilium/chart
         helm:
           releaseName: cilium
-          valueFiles:
-          - overlays/{{cluster}}/values.yaml
-          values: |-
-            {{values}}
       destination:
         server: '{{url}}'
         namespace: kube-system
