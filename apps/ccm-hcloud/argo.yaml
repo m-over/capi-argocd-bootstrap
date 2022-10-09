@@ -11,7 +11,7 @@ spec:
         url: https://kubernetes.default.svc
   template:
     metadata:
-      name: '{{cluster}}-ccm-hcloud'
+      name: 'app-ccm-hcloud-{{cluster}}'
     spec:
       project: default
       source:
