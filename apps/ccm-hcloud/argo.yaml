@@ -13,6 +13,7 @@ spec:
     metadata:
       name: '{{cluster}}-ccm-hcloud'
     spec:
+      project: default
       source:
         repoURL: "https://github.com/m-over/capi-argocd-bootstrap.git"
         targetRevision: HEAD
