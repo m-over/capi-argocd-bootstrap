@@ -17,7 +17,7 @@ spec:
       source:
         repoURL: "https://github.com/m-over/capi-argocd-bootstrap.git"
         targetRevision: HEAD
-        path: apps/cilium
+        path: apps/cilium/chart
         helm:
           releaseName: cilium
           valueFiles:
