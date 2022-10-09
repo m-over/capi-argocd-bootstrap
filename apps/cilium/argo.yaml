@@ -17,11 +17,11 @@ spec:
       source:
         repoURL: "https://github.com/m-over/capi-argocd-bootstrap.git"
         targetRevision: HEAD
-        path: apps/cilium/chart
+        path: apps/cilium
         helm:
           releaseName: cilium
           valueFiles:
-          - ../overlays/{{cluster}}/values.yaml
+          - overlays/{{cluster}}/values.yaml
           values: |-
             {{values}}
       destination:
