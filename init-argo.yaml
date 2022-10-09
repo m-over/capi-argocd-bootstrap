@@ -7,7 +7,7 @@ metadata:
 spec:
   generators:
   - git:
-      repoURL: "git@github.com:m-over/capi-argocd-bootstrap.git"
+      repoURL: "https://github.com/m-over/capi-argocd-bootstrap.git"
       revision: HEAD
       directories:
       - path: apps/*
@@ -17,7 +17,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: "git@github.com:m-over/capi-argocd-bootstrap.git"
+        repoURL: "https://github.com/m-over/capi-argocd-bootstrap.git"
         targetRevision: HEAD
         path: apps/{{path[1]}}
       destination:
@@ -32,18 +32,24 @@ metadata:
 spec:
   generators:
   - git:
-      repoURL: "git@github.com:m-over/capi-argocd-bootstrap.git"
+      repoURL: "https://github.com/m-over/capi-argocd-bootstrap.git"
       revision: HEAD
       directories:
       - path: cluster/*
+      - path: cluster/capi-mgm
+        exclude: true
   template:
     metadata:
       name: 'capi-{{path[1]}}'
     spec:
       project: default
       source:
-        repoURL: "git@github.com:m-over/capi-argocd-bootstrap.git"
+        repoURL: "https://github.com/m-over/capi-argocd-bootstrap.git"
         targetRevision: HEAD
         path: cluster/{{path[1]}}
       destination:
         server: 'https://kubernetes.default.svc'
+      syncPolicy:
+        automated:
+          prune: false
+          selfHeal: false
