@@ -9,6 +9,8 @@ spec:
       elements:
       - cluster: capi-mgm
         url: https://kubernetes.default.svc
+        files: 
+        - path: apps/ccm-hcloud/overlays/{{cluster}}
   template:
     metadata:
       name: 'app-cilium-{{cluster}}'
@@ -20,8 +22,8 @@ spec:
         path: apps/cilium/chart
         helm:
           releaseName: cilium
-          ValueFiles: 
-          - apps/cilium/overlays/{{cluster}}/values.yaml
+          values: |-
+            {{values}}
       destination:
         server: '{{url}}'
         namespace: kube-system
