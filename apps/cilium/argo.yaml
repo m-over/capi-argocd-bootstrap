@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: cilium
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: capi-mgm
+        url: https://kubernetes.default.svc
+  template:
+    metadata:
+      name: 'app-cilium-{{cluster}}'
+    spec:
+      project: default
+      source:
+        repoURL: "https://github.com/m-over/capi-argocd-bootstrap.git"
+        targetRevision: HEAD
+        path: apps/cilium/chart
+        helm:
+          values: ../{{cluster}}/values.yaml
+      destination:
+        server: '{{url}}'
+        namespace: argocd
