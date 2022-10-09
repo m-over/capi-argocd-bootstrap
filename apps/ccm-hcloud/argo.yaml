@@ -18,4 +18,4 @@ spec:
         path: apps/ccm-hcloud/overlays/{{cluster}}
       destination:
         server: '{{url}}'
-        namespace: guestbook
+        namespace: argocd
