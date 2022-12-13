@@ -8,8 +8,6 @@ metadata:
   labels:
     io.cilium/app: operator
     name: cilium-operator
-    app.kubernetes.io/part-of: cilium
-    app.kubernetes.io/name: cilium-operator
 spec:
   # See docs on ServerCapabilities.LeasesResourceLock in file pkg/k8s/version/version.go
   # for more details.
@@ -39,8 +37,6 @@ spec:
       labels:
         io.cilium/app: operator
         name: cilium-operator
-        app.kubernetes.io/part-of: cilium
-        app.kubernetes.io/name: cilium-operator
         {{- with .Values.operator.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -51,7 +47,7 @@ spec:
       {{- end }}
       containers:
       - name: cilium-operator
-        image: {{ include "cilium.operator.image" . }}
+        image: {{ include "cilium.operator.image" . | quote }}
         imagePullPolicy: {{ .Values.operator.image.pullPolicy }}
         command:
         - cilium-operator-{{ include "cilium.operator.cloud" . }}
@@ -224,18 +220,6 @@ spec:
       # node as they will clash with each other.
       affinity:
         {{- toYaml . | trim | nindent 8 }}
-      {{- end }}
-      {{- with .Values.operator.topologySpreadConstraints }}
-      topologySpreadConstraints:
-        {{- range $constraint := . }}
-      - {{ toYaml $constraint | nindent 8 | trim }}
-          {{- if not $constraint.labelSelector }}
-        labelSelector:
-          matchLabels:
-            io.cilium/app: operator
-            name: cilium-operator
-          {{- end }}
-        {{- end }}
       {{- end }}
       {{- with .Values.operator.nodeSelector }}
       nodeSelector:

@@ -7,8 +7,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     k8s-app: hubble-relay
-    app.kubernetes.io/name: hubble-relay
-    app.kubernetes.io/part-of: cilium
 spec:
   replicas: {{ .Values.hubble.relay.replicas }}
   selector:
@@ -30,8 +28,6 @@ spec:
         {{- end }}
       labels:
         k8s-app: hubble-relay
-        app.kubernetes.io/name: hubble-relay
-        app.kubernetes.io/part-of: cilium
         {{- with .Values.hubble.relay.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -101,17 +97,6 @@ spec:
       {{- with .Values.hubble.relay.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.hubble.relay.topologySpreadConstraints }}
-      topologySpreadConstraints:
-        {{- range $constraint := . }}
-      - {{ toYaml $constraint | nindent 8 | trim }}
-          {{- if not $constraint.labelSelector }}
-        labelSelector:
-          matchLabels:
-            k8s-app: hubble-relay
-          {{- end }}
-        {{- end }}
       {{- end }}
       {{- with .Values.hubble.relay.nodeSelector }}
       nodeSelector:

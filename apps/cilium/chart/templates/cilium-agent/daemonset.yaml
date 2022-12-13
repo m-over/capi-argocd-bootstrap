@@ -18,8 +18,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     k8s-app: cilium
-    app.kubernetes.io/part-of: cilium
-    app.kubernetes.io/name: cilium-agent
     {{- if .Values.keepDeprecatedLabels }}
     kubernetes.io/cluster-service: "true"
     {{- if and .Values.gke.enabled (eq .Release.Namespace "kube-system" ) }}
@@ -64,8 +62,6 @@ spec:
         {{- end }}
       labels:
         k8s-app: cilium
-        app.kubernetes.io/name: cilium-agent
-        app.kubernetes.io/part-of: cilium
         {{- if .Values.keepDeprecatedLabels }}
         kubernetes.io/cluster-service: "true"
         {{- end }}
@@ -421,9 +417,6 @@ spec:
         resources:
           {{- toYaml . | trim | nindent 10 }}
         {{- end }}
-      {{- end }}
-      {{- if .Values.extraContainers }}
-      {{- toYaml .Values.extraContainers | nindent 6 }}
       {{- end }}
       initContainers:
       {{- if .Values.cgroup.autoMount.enabled }}

@@ -6,8 +6,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     k8s-app: hubble-ui
-    app.kubernetes.io/name: hubble-ui
-    app.kubernetes.io/part-of: cilium
 spec:
   replicas: {{ .Values.hubble.ui.replicas }}
   selector:
@@ -25,8 +23,6 @@ spec:
         {{- end }}
       labels:
         k8s-app: hubble-ui
-        app.kubernetes.io/name: hubble-ui
-        app.kubernetes.io/part-of: cilium
         {{- with .Values.hubble.ui.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -109,17 +105,6 @@ spec:
       {{- with .Values.hubble.ui.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.hubble.ui.topologySpreadConstraints }}
-      topologySpreadConstraints:
-        {{- range $constraint := . }}
-      - {{ toYaml $constraint | nindent 8 | trim }}
-          {{- if not $constraint.labelSelector }}
-        labelSelector:
-          matchLabels:
-            k8s-app: hubble-ui
-          {{- end }}
-        {{- end }}
       {{- end }}
       {{- with .Values.hubble.ui.nodeSelector }}
       nodeSelector:

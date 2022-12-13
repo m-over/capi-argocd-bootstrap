@@ -7,8 +7,6 @@ metadata:
   labels:
     io.cilium/app: operator
     name: cilium-operator
-    app.kubernetes.io/part-of: cilium
-    app.kubernetes.io/name: cilium-operator
 spec:
   clusterIP: None
   type: ClusterIP

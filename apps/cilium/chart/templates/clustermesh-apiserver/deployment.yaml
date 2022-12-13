@@ -6,8 +6,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     k8s-app: clustermesh-apiserver
-    app.kubernetes.io/part-of: cilium
-    app.kubernetes.io/name: clustermesh-apiserver
 spec:
   replicas: {{ .Values.clustermesh.apiserver.replicas }}
   selector:
@@ -24,8 +22,6 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
       labels:
-        app.kubernetes.io/part-of: cilium
-        app.kubernetes.io/name: clustermesh-apiserver
         k8s-app: clustermesh-apiserver
         {{- with .Values.clustermesh.apiserver.podLabels }}
         {{- toYaml . | nindent 8 }}
@@ -171,17 +167,6 @@ spec:
       {{- with .Values.clustermesh.apiserver.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.clustermesh.apiserver.topologySpreadConstraints }}
-      topologySpreadConstraints:
-        {{- range $constraint := . }}
-      - {{ toYaml $constraint | nindent 8 | trim }}
-          {{- if not $constraint.labelSelector }}
-        labelSelector:
-          matchLabels:
-            k8s-app: clustermesh-apiserver
-          {{- end }}
-        {{- end }}
       {{- end }}
       {{- with .Values.clustermesh.apiserver.nodeSelector }}
       nodeSelector:
