@@ -1,7 +1,7 @@
 apiVersion: bootstrap.cluster.x-k8s.io/v1beta1
 kind: KubeadmConfigTemplate
 metadata:
-  name: capi-mgm-md-0
+  name: nbg1-cicd01-md-0
   namespace: default
 spec:
   template:
@@ -111,7 +111,7 @@ spec:
 apiVersion: cluster.x-k8s.io/v1beta1
 kind: Cluster
 metadata:
-  name: capi-mgm
+  name: nbg1-cicd01
   namespace: default
 spec:
   clusterNetwork:
@@ -121,49 +121,49 @@ spec:
   controlPlaneRef:
     apiVersion: controlplane.cluster.x-k8s.io/v1beta1
     kind: KubeadmControlPlane
-    name: capi-mgm-control-plane
+    name: nbg1-cicd01-control-plane
   infrastructureRef:
     apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
     kind: HetznerCluster
-    name: capi-mgm
+    name: nbg1-cicd01
 ---
 apiVersion: cluster.x-k8s.io/v1beta1
 kind: MachineDeployment
 metadata:
   labels:
-    nodepool: capi-mgm-md-0
-  name: capi-mgm-md-0
+    nodepool: nbg1-cicd01-md-0
+  name: nbg1-cicd01-md-0
   namespace: default
 spec:
-  clusterName: capi-mgm
-  replicas: 3
+  clusterName: nbg1-cicd01
+  replicas: 1
   selector:
     matchLabels: null
   template:
     metadata:
       labels:
-        nodepool: capi-mgm-md-0
+        nodepool: nbg1-cicd01-md-0
     spec:
       bootstrap:
         configRef:
           apiVersion: bootstrap.cluster.x-k8s.io/v1beta1
           kind: KubeadmConfigTemplate
-          name: capi-mgm-md-0
-      clusterName: capi-mgm
+          name: nbg1-cicd01-md-0
+      clusterName: nbg1-cicd01
       failureDomain: nbg1
       infrastructureRef:
         apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
         kind: HCloudMachineTemplate
-        name: capi-mgm-md-0
+        name: nbg1-cicd01-md-0
       version: v1.26.2
 ---
 apiVersion: cluster.x-k8s.io/v1beta1
 kind: MachineHealthCheck
 metadata:
-  name: capi-mgm-control-plane-unhealthy-5m
+  name: nbg1-cicd01-control-plane-unhealthy-5m
   namespace: default
 spec:
-  clusterName: capi-mgm
+  clusterName: nbg1-cicd01
   maxUnhealthy: 100%
   nodeStartupTimeout: 20m
   selector:
@@ -180,15 +180,15 @@ spec:
 apiVersion: cluster.x-k8s.io/v1beta1
 kind: MachineHealthCheck
 metadata:
-  name: capi-mgm-md-0-unhealthy-5m
+  name: nbg1-cicd01-md-0-unhealthy-5m
   namespace: default
 spec:
-  clusterName: capi-mgm
+  clusterName: nbg1-cicd01
   maxUnhealthy: 100%
   nodeStartupTimeout: 20m
   selector:
     matchLabels:
-      nodepool: capi-mgm-md-0
+      nodepool: nbg1-cicd01-md-0
   unhealthyConditions:
   - status: Unknown
     timeout: 300s
@@ -200,7 +200,7 @@ spec:
 apiVersion: controlplane.cluster.x-k8s.io/v1beta1
 kind: KubeadmControlPlane
 metadata:
-  name: capi-mgm-control-plane
+  name: nbg1-cicd01-control-plane
   namespace: default
 spec:
   kubeadmConfigSpec:
@@ -407,14 +407,14 @@ spec:
     infrastructureRef:
       apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
       kind: HCloudMachineTemplate
-      name: capi-mgm-control-plane
+      name: nbg1-cicd01-control-plane
   replicas: 1
   version: v1.26.2
 ---
 apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
 kind: HCloudMachineTemplate
 metadata:
-  name: capi-mgm-control-plane
+  name: nbg1-cicd01-control-plane
   namespace: default
 spec:
   template:
@@ -426,7 +426,7 @@ spec:
 apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
 kind: HCloudMachineTemplate
 metadata:
-  name: capi-mgm-md-0
+  name: nbg1-cicd01-md-0
   namespace: default
 spec:
   template:
@@ -438,7 +438,7 @@ spec:
 apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
 kind: HetznerCluster
 metadata:
-  name: capi-mgm
+  name: nbg1-cicd01
   namespace: default
 spec:
   controlPlaneEndpoint:
