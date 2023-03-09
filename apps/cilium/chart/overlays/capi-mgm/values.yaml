@@ -1,5 +1,0 @@
-operator:
-  enabled: true
-  replicas: 1
-hubble:
-  enabled: false
