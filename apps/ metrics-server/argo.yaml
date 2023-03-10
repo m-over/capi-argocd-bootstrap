@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: netrics-server
+  namespace: argocd
+spec:
+  generators:
+  - clusters: {}
+  template:
+    metadata:
+      name: 'app-kyverno-{{name}}'
+    spec:
+      project: default
+      source:
+        repoURL: "https://github.com/m-over/capi-argocd-bootstrap.git"
+        targetRevision: HEAD
+        path: apps/netrics-server/base
+      destination:
+        server: '{{name}}'
+        namespace: argocd
+      syncPolicy:
+        automated:
+          prune: false
+          selfHeal: false
