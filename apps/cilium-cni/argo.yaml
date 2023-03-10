@@ -5,17 +5,10 @@ metadata:
   namespace: argocd
 spec:
   generators:
-  - list:
-      elements:
-      - cluster: capi-mgm
-        url: https://kubernetes.default.svc
-      - cluster: fsn1-app01
-        url: https://142.132.244.209:443
-      - cluster: nbg1-app01
-        url: https://162.55.159.162:443
+  - clusters: {}
   template:
     metadata:
-      name: 'app-cilium-cni-{{cluster}}'
+      name: 'app-cilium-cni-{{name}}'
     spec:
       project: default
       source:
@@ -25,9 +18,9 @@ spec:
         helm:
           releaseName: cilium
           valueFiles:
-          - overlays/{{cluster}}/values.yaml
+          - overlays/{{name}}/values.yaml
       destination:
-        server: '{{url}}'
+        server: '{{server}}'
         namespace: kube-system
       syncPolicy:
         automated:
