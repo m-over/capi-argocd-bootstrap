@@ -5,23 +5,16 @@ metadata:
   namespace: argocd
 spec:
   generators:
-  - list:
-      elements:
-      - cluster: capi-mgm
-        url: https://kubernetes.default.svc
-      - cluster: fsn1-app01
-        url: https://142.132.244.209:443
-      - cluster: nbg1-app01
-        url: https://162.55.159.162:443
+  - clusters: {}
   template:
     metadata:
-      name: 'app-ccm-hcloud-{{cluster}}'
+      name: 'app-ccm-hcloud-{{name}}'
     spec:
       project: default
       source:
         repoURL: "https://github.com/m-over/capi-argocd-bootstrap.git"
         targetRevision: HEAD
-        path: apps/ccm-hcloud/overlays/{{cluster}}
+        path: apps/ccm-hcloud/overlays/{{name}}
       destination:
         server: '{{url}}'
         namespace: argocd
