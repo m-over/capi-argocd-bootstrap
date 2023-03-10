@@ -10,7 +10,7 @@ spec:
       - cluster: capi-mgm
         url: https://kubernetes.default.svc
       - cluster: fsn1-app01
-        url: https://49.12.19.66:443
+        url: https://142.132.244.209:443
   template:
     metadata:
       name: 'app-ccm-hcloud-{{cluster}}'
