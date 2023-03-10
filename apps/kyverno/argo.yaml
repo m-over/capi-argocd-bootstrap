@@ -5,21 +5,18 @@ metadata:
   namespace: argocd
 spec:
   generators:
-  - list:
-      elements:
-      - cluster: capi-mgm
-        url: https://kubernetes.default.svc
+  - clusters: {}
   template:
     metadata:
-      name: 'app-kyverno-{{cluster}}'
+      name: 'app-kyverno-{{name}}'
     spec:
       project: default
       source:
         repoURL: "https://github.com/m-over/capi-argocd-bootstrap.git"
         targetRevision: HEAD
-        path: apps/kyverno/overlays/{{cluster}}
+        path: apps/kyverno/overlays/{{name}}
       destination:
-        server: '{{url}}'
+        server: '{{name}}'
         namespace: argocd
       syncPolicy:
         automated:
