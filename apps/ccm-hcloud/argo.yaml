@@ -16,7 +16,7 @@ spec:
         targetRevision: HEAD
         path: apps/ccm-hcloud/overlays/{{name}}
       destination:
-        server: '{{url}}'
+        server: '{{name}}'
         namespace: argocd
       syncPolicy:
         automated:
