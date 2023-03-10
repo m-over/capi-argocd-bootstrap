@@ -21,7 +21,7 @@ spec:
         targetRevision: HEAD
         path: apps/cilium-tetragon/chart
         helm:
-          releaseName: cilium
+          releaseName: cilium-tetragon
           valueFiles:
           - overlays/{{cluster}}/values.yaml
       destination:
