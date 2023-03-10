@@ -4,4 +4,4 @@ kind: Kustomization
 
 resources:
 - ../../base
-#- capi-to-argocd.yaml
+- capi-to-argocd.yaml
