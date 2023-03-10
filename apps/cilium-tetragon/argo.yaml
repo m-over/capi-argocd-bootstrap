@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: cilium
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: fsn1-app01
+        url: https://142.132.244.209:443
+      - cluster: nbg1-app01
+        url: https://162.55.159.162:443
+  template:
+    metadata:
+      name: 'app-cilium-tetragon-{{cluster}}'
+    spec:
+      project: default
+      source:
+        repoURL: "https://github.com/m-over/capi-argocd-bootstrap.git"
+        targetRevision: HEAD
+        path: apps/cilium-tetragon/chart
+        helm:
+          releaseName: cilium
+          valueFiles:
+          - overlays/{{cluster}}/values.yaml
+      destination:
+        server: '{{url}}'
+        namespace: kube-system
