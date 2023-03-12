@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: tekton
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: nbg01-cicd01
+  template:
+    metadata:
+      name: 'app-tekton-{{cluster}}'
+    spec:
+      project: default
+      source:
+        repoURL: "https://github.com/m-over/capi-argocd-bootstrap.git"
+        targetRevision: HEAD
+        path: apps/tekton/overlays/{{cluster}}
+      destination:
+        server: '{{cluster}}'
+        namespace: argocd
+      syncPolicy:
+        automated:
+          prune: false
+          selfHeal: false
